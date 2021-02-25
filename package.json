@@ -1,0 +1,30 @@
+{
+  "name": "blog-nosqlcassandra",
+  "version": "1.0.0",
+  "description": "Esta es una api GraphQL desarrollada con la base de datos Cassandra",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -e js, graphql index",
+    "lint": "standard",
+    "lint-fix": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "GraphQL",
+    "Cassandra",
+    "Api",
+    "GraphQl"
+  ],
+  "author": "Andres Quinche",
+  "license": "ISC",
+  "dependencies": {
+    "cassandra-driver": "^4.6.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-cassandra": "^2.5.0",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.2"
+  }
+}
