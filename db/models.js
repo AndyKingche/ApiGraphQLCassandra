@@ -4,7 +4,7 @@ module.exports ={
         //let db = await connectDB()
             let User = {
                 fields: {
-                id:"int",
+                id:"text",
                 nombre: "text",
                 email:  "text",
                 nickname:"text",
@@ -19,29 +19,21 @@ module.exports ={
         Categoria: ()=>{
             let Category = {
                 fields: {
-                id:"int",
+                id:"text",
                 nombre_categoria: "text"
               },
               key:["id"]
             }
             return Category
         },
-        Etiqueta:()=>{
-            let Tags = {
-                fields: {
-                id:"int",
-                nombre_etiqueta: "text"
-              },
-              key:["id"]
-            }
-            return Tags
-        },
         Comentario:()=>{
             let Comment = {
                 fields: {
-                id:"int",
-                usuariosid:"int",
-                contenido: "text"
+                id:"text",
+                usuariosid:"text",
+                postsid:"text",
+                contenido: "text",
+
               },
               key:["id"]
             }
@@ -51,12 +43,13 @@ module.exports ={
         Post: () => {
             let Post = {
                 fields: {
-                id:"int",
-                categoriasid:"int",
-                comentarioid:"int",
-                usuariosid:"int",
+                id:"text",
+                categoriasid:"text",
+                usuariosid:"text",
                 titulo: "text",
                 estado: "boolean",
+                contenido:"text",
+                keywords:"text",
                 fecha_publicacion:"timestamp"
               },
               key:["id"]
@@ -64,10 +57,7 @@ module.exports ={
 
             return Post
 
-        },
-        PostEtiqueta:() => {
-            let PostEtiqueta 
-        } 
+        }
 
 } 
 

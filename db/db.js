@@ -1,7 +1,11 @@
 'use strict'
 const cassandra = require("express-cassandra")
-async function connectDB(){
-    const models = cassandra.createClient({
+//const cassandra = require('cassandra-driver');
+const models = require('./models')
+let modelo
+
+function connectDB(){
+     const conect = cassandra.createClient({
         clientOptions:{
             contactPoints: ['127.0.0.1'],
             protocolOptions: { port: 9042 },
@@ -16,10 +20,17 @@ async function connectDB(){
             migration: 'safe',
         }
     })
- 
-    return models
+    modelo = {
+     usuarios : conect.loadSchema('usuarios', models.Usuario()),
+     comentarios: conect.loadSchema('comentarios',models.Comentario()),
+     categorias: conect.loadSchema('categorias', models.Categoria()),
+     posts: conect.loadSchema('posts', models.Post())
+    }
+return conect
 }
-module.exports = connectDB
+connectDB()
+
+module.exports = modelo
         
     
     
