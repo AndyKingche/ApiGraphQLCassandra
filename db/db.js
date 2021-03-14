@@ -1,41 +1,31 @@
 'use strict'
-const cassandra = require("express-cassandra")
-//const cassandra = require('cassandra-driver');
-const models = require('./models')
-let modelo
-
-function connectDB(){
-     const conect = cassandra.createClient({
-        clientOptions:{
-            contactPoints: ['127.0.0.1'],
-            protocolOptions: { port: 9042 },
-            keyspace: 'keyspace1',
-            queryOptions: {consistency: cassandra.consistencies.one}
-        },
-        ormOptions: {
-            defaultReplicationStrategy : {
-                class: 'SimpleStrategy',
-                replication_factor: 1
-            },
-            migration: 'safe',
-        }
-    })
-    modelo = {
-     usuarios : conect.loadSchema('usuarios', models.Usuario()),
-     comentarios: conect.loadSchema('comentarios',models.Comentario()),
-     categorias: conect.loadSchema('categorias', models.Categoria()),
-     posts: conect.loadSchema('posts', models.Post())
+const cassandra = require('cassandra-driver');     
+const client = new cassandra.Client({
+    contactPoints: ['127.0.0.1'],
+    localDataCenter: 'datacenter1',
+    keyspace: 'keyspace1',
+    pooling:{
+        maxRequestsPerConnection: 100000
     }
-return conect
+  });
+  const Mapper = cassandra.mapping.Mapper;
+
+  const mapper = new Mapper(client,{
+      models : { 'Usuarios':{ tables:['usuarios']},
+      'Comentarios': {tables:['comentarios']},
+      'Categorias': {tables:['categorias']},
+      'Posts':{tables:['posts']}
+    
+    }
+  })
+const model = {
+    Usuarios: mapper.forModel('Usuarios'),
+    Comentarios: mapper.forModel('Comentarios'),
+    Categorias: mapper.forModel('Categorias'),
+    Posts: mapper.forModel('Posts')
 }
-connectDB()
-
-module.exports = modelo
-        
-    
-    
-
-
-
-
+  module.exports = {
+      Model : model,
+      Client:client
+  }
 
